@@ -1,22 +1,26 @@
-FROM ubuntu:latest AS build
+# Etapa 1: build da aplicação
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 
-#
+WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+COPY pom.xml .
+COPY src ./src
 
-RUN apt-get install maven -y
-RUN mvn clean install
+RUN mvn clean package -DskipTests
 
+# Etapa 2: imagem final
 FROM openjdk:17-jdk-slim
 
-RUN mkdir data
+WORKDIR /app
 
+# Cria diretório para banco de dados persistente (caso H2)
+RUN mkdir -p /app/data
+
+# Expondo porta padrão Spring Boot
 EXPOSE 8080
 
-COPY --from=build /target/*.jar app.jar
+# Copiando JAR gerado
+COPY --from=build /app/target/*.jar app.jar
 
-#
-
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Executando a aplicação
+ENTRYPOINT ["java", "-jar", "app.jar"]

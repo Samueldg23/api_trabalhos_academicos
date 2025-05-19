@@ -15,7 +15,7 @@ RUN mkdir data
 
 EXPOSE 8080
 
-COPY --from=build /target/taskmanager.jar app.jar
+COPY --from=build /target/*.jar app.jar
 
 #
 

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.unisales.trabalhos_academicos.model.TrabalhoAcademico;
 import br.com.unisales.trabalhos_academicos.service.TrabalhoService;
 
-
 @RestController
 @RequestMapping("/trabalhos")
 @CrossOrigin
@@ -37,15 +36,6 @@ public class TrabalhoController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    /*
-     * @PostMapping
-     * public ResponseEntity<TrabalhoAcademico> criar(@RequestBody TrabalhoAcademico
-     * trabalho) {
-     * TrabalhoAcademico salvo = service.salvar(trabalho);
-     * return ResponseEntity.ok(salvo);
-     * }
-     */
 
     @PostMapping
     public ResponseEntity<TrabalhoAcademico> criar(@RequestBody TrabalhoAcademico trabalho) {
@@ -68,6 +58,25 @@ public class TrabalhoController {
         try {
             service.deletar(id);
             return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // 🔹 Buscar trabalhos por aluno
+    @GetMapping("/aluno/{alunoId}")
+    public List<TrabalhoAcademico> listarPorAluno(@PathVariable Long alunoId) {
+        return service.listarPorAluno(alunoId);
+    }
+
+    // 🔹 Criar trabalho para aluno
+    @PostMapping("/aluno/{alunoId}")
+    public ResponseEntity<TrabalhoAcademico> criarParaAluno(
+            @PathVariable Long alunoId,
+            @RequestBody TrabalhoAcademico trabalho) {
+        try {
+            TrabalhoAcademico salvo = service.salvarParaAluno(alunoId, trabalho);
+            return ResponseEntity.ok(salvo);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }

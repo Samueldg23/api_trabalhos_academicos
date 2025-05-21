@@ -23,25 +23,7 @@ public class AlunoService {
         return repository.findById(id);
     }
 
-    public Aluno salvar(Aluno aluno) {
-        return repository.save(aluno);
-    }
-
     public Optional<Aluno> login(String email, String senha) {
         return repository.findByEmailAndSenha(email, senha);
     }
-
-    public void deletar(Long id) {
-        repository.deleteById(id);
-    }
-
-    public Optional<Aluno> atualizar(Long id, Aluno novoAluno) {
-        return repository.findById(id).map(alunoExistente -> {
-            alunoExistente.setNome(novoAluno.getNome());
-            alunoExistente.setEmail(novoAluno.getEmail());
-            alunoExistente.setSenha(novoAluno.getSenha());
-            return repository.save(alunoExistente);
-        });
-    }
-
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,22 +35,10 @@ public class AlunoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
-        return ResponseEntity.ok(service.salvar(aluno));
-    }
-
     @PostMapping("/login")
     public ResponseEntity<Aluno> login(@RequestBody Aluno loginRequest) {
         return service.login(loginRequest.getEmail(), loginRequest.getSenha())
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(401).build());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Aluno> atualizar(@PathVariable Long id, @RequestBody Aluno alunoAtualizado) {
-        return service.atualizar(id, alunoAtualizado)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
     }
 }

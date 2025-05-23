@@ -26,4 +26,18 @@ public class AlunoService {
     public Optional<Aluno> login(String email, String senha) {
         return repository.findByEmailAndSenha(email, senha);
     }
+    public Aluno create(Aluno aluno) {
+        return repository.save(aluno);
+    }
+    public Optional<Aluno> update(Long id, Aluno aluno) {
+        return repository.findById(id).map(alunoExistente -> {
+            alunoExistente.setNome(aluno.getNome());
+            alunoExistente.setEmail(aluno.getEmail());
+            alunoExistente.setSenha(aluno.getSenha());
+            return repository.save(alunoExistente);
+        });
+    }
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

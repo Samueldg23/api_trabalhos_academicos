@@ -9,5 +9,5 @@ import br.com.unisales.trabalhos_academicos.model.TrabalhoAcademico;
 
 @Repository
 public interface TrabalhoRepository extends JpaRepository<TrabalhoAcademico, Long> {
-    List<TrabalhoAcademico> findByAlunoId(Long alunoId);
+    List<TrabalhoAcademico> findByUniversitarioId(Long universitarioId);
 }

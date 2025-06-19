@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Aluno {
+public class Universitario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

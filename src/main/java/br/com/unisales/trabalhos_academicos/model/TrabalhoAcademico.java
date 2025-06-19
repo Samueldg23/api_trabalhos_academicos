@@ -28,6 +28,6 @@ public class TrabalhoAcademico {
     private Boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Aluno aluno;
+    @JoinColumn(name = "universitario_id")
+    private Universitario universitario;
 }

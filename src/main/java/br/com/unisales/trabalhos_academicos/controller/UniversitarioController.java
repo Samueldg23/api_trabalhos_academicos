@@ -8,33 +8,37 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.unisales.trabalhos_academicos.model.TrabalhoAcademico;
-import br.com.unisales.trabalhos_academicos.service.TrabalhoService;
+import br.com.unisales.trabalhos_academicos.model.Universitario;
+import br.com.unisales.trabalhos_academicos.service.UniversitarioService;
 
 @RestController
-@RequestMapping("/trabalhos")
+@RequestMapping("/universitarios")
 @CrossOrigin
-public class TrabalhoController {
+public class UniversitarioController {
 
     @Autowired
-    private TrabalhoService service;
+    private UniversitarioService service;
 
     @GetMapping
-    public List<TrabalhoAcademico> listarTodos() {
+    public List<Universitario> listarTodos() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TrabalhoAcademico> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Universitario> buscarPorId(@PathVariable Long id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/universitario/{universitarioId}")
-    public List<TrabalhoAcademico> listarPorUniversitario(@PathVariable Long universitarioId) {
-        return service.listarPorUniversitario(universitarioId);
+    @GetMapping("/login")
+    public ResponseEntity<Universitario> login(@RequestParam String email, @RequestParam String senha) {
+        return service.login(email, senha)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(401).build());
     }
+
 }

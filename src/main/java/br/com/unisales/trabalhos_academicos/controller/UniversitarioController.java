@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.unisales.trabalhos_academicos.model.Universitario;
@@ -34,8 +33,8 @@ public class UniversitarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<Universitario> login(@RequestParam String email, @RequestParam String senha) {
+    @GetMapping("/login/{email}/{senha}")
+    public ResponseEntity<Universitario> login(@PathVariable String email, @PathVariable String senha) {
         return service.login(email, senha)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(401).build());

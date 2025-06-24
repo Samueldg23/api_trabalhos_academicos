@@ -38,6 +38,9 @@ public class TrabalhoService {
             TrabalhoAcademico existente = trabalhoExistente.get();
             existente.setTitulo(trabalhoAcademico.getTitulo());
             existente.setDescricao(trabalhoAcademico.getDescricao());
+            existente.setDataEntrega(trabalhoAcademico.getDataEntrega());
+            existente.setDisciplina(trabalhoAcademico.getDisciplina());
+            existente.setStatus(trabalhoAcademico.getStatus());
             existente.setUniversitario(trabalhoAcademico.getUniversitario());
             return repository.save(existente);
         } else {

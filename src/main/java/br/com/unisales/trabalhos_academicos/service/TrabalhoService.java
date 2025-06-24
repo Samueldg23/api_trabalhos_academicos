@@ -26,4 +26,22 @@ public class TrabalhoService {
     public List<TrabalhoAcademico> listarPorUniversitario(Long universitarioId) {
         return repository.findByUniversitarioId(universitarioId);
     }
+    public TrabalhoAcademico salvar(TrabalhoAcademico trabalhoAcademico) {
+        return repository.save(trabalhoAcademico);
+    }
+    public void deletar(Long id) {
+        repository.deleteById(id);
+    }
+    public TrabalhoAcademico atualizar(Long id, TrabalhoAcademico trabalhoAcademico) {
+        Optional<TrabalhoAcademico> trabalhoExistente = repository.findById(id);
+        if (trabalhoExistente.isPresent()) {
+            TrabalhoAcademico existente = trabalhoExistente.get();
+            existente.setTitulo(trabalhoAcademico.getTitulo());
+            existente.setDescricao(trabalhoAcademico.getDescricao());
+            existente.setUniversitario(trabalhoAcademico.getUniversitario());
+            return repository.save(existente);
+        } else {
+            throw new RuntimeException("Trabalho acadêmico não encontrado com o ID: " + id);
+        }
+    }
 }

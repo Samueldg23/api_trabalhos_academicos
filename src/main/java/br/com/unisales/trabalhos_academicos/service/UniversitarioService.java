@@ -26,4 +26,22 @@ public class UniversitarioService {
     public Optional<Universitario> login(String email, String senha) {
         return repository.findByEmailAndSenha(email, senha);
     }
+    public Universitario salvar(Universitario universitario) {
+        return repository.save(universitario);
+    }
+    public void deletar(Long id) {
+        repository.deleteById(id);
+    }
+    public Universitario atualizar (Long id, Universitario universitario) {
+        Optional<Universitario> usuario = repository.findById(id);
+        if (usuario.isPresent()) {
+            Universitario existente = usuario.get();
+            existente.setNome(universitario.getNome());
+            existente.setEmail(universitario.getEmail());
+            existente.setSenha(universitario.getSenha());
+            return repository.save(existente);
+        } else {
+            throw new RuntimeException("Universitário não encontrado com o ID: " + id);
+        }
+    }
 }
